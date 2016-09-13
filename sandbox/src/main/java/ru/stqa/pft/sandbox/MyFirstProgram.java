@@ -8,24 +8,14 @@ public class MyFirstProgram {
     hello("User!");
 
     int l=6;
-    double len =5;
-
+    Square s = new Square(5);
     System.out.println("S квадрата со стороной =" + l + " = " + (l*l));
 
-    System.out.println("S квадрата со стороной =" + len + " = " + area(len));
+    System.out.println("S квадрата со стороной =" + s.l + " = " + s.area());
 
-    double a = 4;
-    double b = 6;
-    System.out.println("S прямоугольника со стороной a =" + a + " b=" + b + " равна " + area(a, b));
+    Rectangle r = new Rectangle(4, 6);
+    System.out.println("S прямоугольника со стороной a=" + r.a + " b=" + r.b + " равна " + r.area());
 
-  }
-
-  public static double area(double l){
-    return l*l;
-  }
-
-  public static double area(double a, double b){
-    return a * b;
   }
 
   public static void hello(String somebody){
