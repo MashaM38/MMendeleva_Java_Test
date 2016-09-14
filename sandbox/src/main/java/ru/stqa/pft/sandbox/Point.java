@@ -5,15 +5,15 @@ package ru.stqa.pft.sandbox;
  */
 public class Point {
 
-  public double p1;
-  public double p2;
+  public double x;
+  public double y;
 
-  public Point (double p1, double p2){
-    this.p1 = p1;
-    this.p2 = p2;
+  public Point (double x, double y){
+    this.x = x;
+    this.y = y;
   }
 
-  public double distance(){
-    return Math.sqrt(Math.pow((this.p2 - this.p1), 2) + Math.pow((this.p1 - this.p2), 2));
+  public double distance(Point p1, Point p2){
+    return Math.sqrt((Math.pow((p2.x - p1.x),2)) + (Math.pow((p2.y - p1.y),2)));
   }
 }
