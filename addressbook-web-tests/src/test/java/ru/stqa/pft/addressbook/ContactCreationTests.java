@@ -21,19 +21,18 @@ public class ContactCreationTests {
     public void setUp() throws Exception {
         wd = new FirefoxDriver();
         wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        goToCreateNewContactPage();
     }
     
     @Test
-    public void ContactCreationTests() {
-        wd.get("http://localhost/addressbook/edit.php");
-        wd.findElement(By.id("LoginForm")).click();
-        wd.findElement(By.name("user")).click();
-        wd.findElement(By.name("user")).clear();
-        wd.findElement(By.name("user")).sendKeys("admin");
-        wd.findElement(By.name("pass")).click();
-        wd.findElement(By.name("pass")).clear();
-        wd.findElement(By.name("pass")).sendKeys("secret");
-        wd.findElement(By.xpath("//form[@id='LoginForm']/input[3]")).click();
+    public void testContactCreation() {
+        login();
+        fillContactData();
+        submitNewContact();
+        observeCreatedContact();
+    }
+
+    private void fillContactData() {
         wd.findElement(By.name("firstname")).click();
         wd.findElement(By.name("firstname")).clear();
         wd.findElement(By.name("firstname")).sendKeys("User1");
@@ -55,11 +54,31 @@ public class ContactCreationTests {
         wd.findElement(By.name("notes")).click();
         wd.findElement(By.name("notes")).clear();
         wd.findElement(By.name("notes")).sendKeys("feel free to share any comments");
-        wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
-        wd.findElement(By.linkText("home")).click();
-        new Actions(wd).doubleClick(wd.findElement(By.linkText("home"))).build().perform();
     }
-    
+
+    private void observeCreatedContact() {
+        wd.findElement(By.linkText("home")).click();
+    }
+
+    private void submitNewContact() {
+        wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
+    }
+
+    private void login() {
+        wd.findElement(By.id("LoginForm")).click();
+        wd.findElement(By.name("user")).click();
+        wd.findElement(By.name("user")).clear();
+        wd.findElement(By.name("user")).sendKeys("admin");
+        wd.findElement(By.name("pass")).click();
+        wd.findElement(By.name("pass")).clear();
+        wd.findElement(By.name("pass")).sendKeys("secret");
+        wd.findElement(By.xpath("//form[@id='LoginForm']/input[3]")).click();
+    }
+
+    private void goToCreateNewContactPage() {
+        wd.get("http://localhost/addressbook/edit.php");
+    }
+
     @AfterMethod
     public void tearDown() {
         wd.quit();
