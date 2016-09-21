@@ -1,8 +1,5 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.UnhandledAlertException;
 import org.testng.annotations.Test;
 
 public class ContactDeletionTests extends TestBase {
@@ -11,20 +8,6 @@ public class ContactDeletionTests extends TestBase {
     public void testContactDeletion() {
         app.getContactHelper().observeContact();
         app.getContactHelper().deleteSelectedContact();
-
-        try{
-            app.getContactHelper().observeContact();
-        }
-        catch (UnhandledAlertException f) {
-            try {
-                Alert alert = app.wd.switchTo().alert();
-                String alertText = alert.getText();
-                System.out.println("Alert data: " + alertText);
-                alert.accept();
-            }
-            catch (NoAlertPresentException e) {
-                e.printStackTrace();
-            }
-        }
+        app.getContactHelper().observeContact();
     }
 }
