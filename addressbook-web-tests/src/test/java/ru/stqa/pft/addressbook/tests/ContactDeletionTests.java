@@ -9,11 +9,11 @@ public class ContactDeletionTests extends TestBase {
     
     @Test
     public void testContactDeletion() {
-        app.observeContact();
-        app.deleteSelectedContact();
+        app.getContactHelper().observeContact();
+        app.getContactHelper().deleteSelectedContact();
 
         try{
-            app.observeContact();
+            app.getContactHelper().observeContact();
         }
         catch (UnhandledAlertException f) {
             try {
