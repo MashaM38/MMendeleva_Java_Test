@@ -9,15 +9,15 @@ public class ContactDeletionTests extends TestBase{
     
     @Test
     public void testContactDeletion() {
-        observeContact();
-        deleteSelectedContact();
+        app.observeContact();
+        app.deleteSelectedContact();
 
         try{
-            observeContact();
+            app.observeContact();
         }
         catch (UnhandledAlertException f) {
             try {
-                Alert alert = wd.switchTo().alert();
+                Alert alert = app.wd.switchTo().alert();
                 String alertText = alert.getText();
                 System.out.println("Alert data: " + alertText);
                 alert.accept();
