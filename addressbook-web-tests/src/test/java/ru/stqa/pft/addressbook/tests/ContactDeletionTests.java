@@ -1,11 +1,11 @@
-package ru.stqa.pft.addressbook;
+package ru.stqa.pft.addressbook.tests;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.UnhandledAlertException;
 import org.testng.annotations.Test;
 
-public class ContactDeletionTests extends TestBase{
+public class ContactDeletionTests extends TestBase {
     
     @Test
     public void testContactDeletion() {
