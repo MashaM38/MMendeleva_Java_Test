@@ -28,7 +28,7 @@ public class TestBase {
   public void setUp() throws Exception {
       wd = new FirefoxDriver();
       wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-      wd.get("http://localhost/addressbook/group.php");
+      wd.get("http://localhost/addressbook");
       login("admin", "secret");
   }
 
@@ -107,7 +107,7 @@ public class TestBase {
       wd.findElement(By.name("notes")).sendKeys(contactData.getNotes());
   }
 
-  protected void observeCreatedContact() {
+  protected void observeContact() {
       wd.findElement(By.linkText("home")).click();
   }
 
@@ -117,5 +117,12 @@ public class TestBase {
 
   protected void goToCreateNewContactPage() {
       wd.get("http://localhost/addressbook/edit.php");
+  }
+
+  protected void deleteSelectedContact() {
+      if (!wd.findElement(By.name("selected[]")).isSelected()) {
+          wd.findElement(By.name("selected[]")).click();
+      }
+      wd.findElement(By.xpath("//div[@id='content']/form[2]/div[2]/input")).click();
   }
 }
