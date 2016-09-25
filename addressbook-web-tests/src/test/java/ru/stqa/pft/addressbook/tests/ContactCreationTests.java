@@ -23,7 +23,7 @@ public class ContactCreationTests extends TestBase {
     }
 
     @Test
-    public void testEmptyContactCreation() {
+    public void testContactCreationEmpty() {
         app.getNavigationHelper().goToCreateNewContactPage();
         app.getContactHelper().submitNewContactWithButtonOnTop();
         app.getContactHelper().observeContact();

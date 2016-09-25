@@ -53,9 +53,6 @@ public class ContactModificationTests extends TestBase{
         app.getContactHelper().clickSelectedContact();
         app.getContactHelper().selectGroupForContactByIndex(1);
         app.getContactHelper().addContactsToGroup();
-        app.getContactHelper().goToGroup();
-        app.getContactHelper().removeFromGroup();
-        app.getContactHelper().goToGroup();
     }
 
 }

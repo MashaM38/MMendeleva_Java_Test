@@ -55,7 +55,7 @@ public class GroupCreationTests extends TestBase {
   }
 
   @Test
-  public void testCreateEmptyGroup() {
+  public void testCreateGroupEmpty() {
     app.getNavigationHelper().gotoGroupPage();
     app.getGroupHelper().initGroupCreationWithNewButtonInBottom();
     app.getGroupHelper().submitGroupCreation();

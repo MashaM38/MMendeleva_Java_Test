@@ -1,7 +1,8 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import ru.stqa.pft.addressbook.model.ContactData;
 
@@ -10,7 +11,7 @@ import ru.stqa.pft.addressbook.model.ContactData;
  */
 public class ContactHelper extends HelperBase{
 
-  public ContactHelper(FirefoxDriver wd){
+  public ContactHelper(WebDriver wd){
     super(wd);
   }
 
@@ -29,7 +30,8 @@ public class ContactHelper extends HelperBase{
   }
 
   public void submitNewContact() {
-    click(By.xpath("//div[@id='content']/form/input[21]"));
+    doubleClick(By.xpath("//div[@id='content']/form/input[21]"));
+    //new Actions(wd).doubleClick(wd.findElement(By.xpath("//div[@id='content']/form/input[21]"))).build().perform();
   }
 
   public void submitNewContactWithButtonOnTop(){
@@ -37,12 +39,18 @@ public class ContactHelper extends HelperBase{
   }
 
   public void addNextContact(){
-    click(By.linkText("add next"));
+    click(By.xpath("//div[@class='msgbox']//a[.='add next']"));
   }
 
   public void clickSelectedContact(){
     if (!wd.findElement(By.name("selected[]")).isSelected()) {
       click(By.name("selected[]"));
+    }
+  }
+
+  public void clickSelectedSecondContact(){
+    if (!wd.findElement(By.name("selected[]")).isSelected()) {
+      click(By.xpath("//input[@id='41']"));
     }
   }
 
@@ -80,7 +88,7 @@ public class ContactHelper extends HelperBase{
   }
 
   public void addContactsToGroup(){
-    click(By.name("add"));
+    doubleClick(By.name("add"));
   }
 
   public void goToGroup(){
@@ -91,14 +99,27 @@ public class ContactHelper extends HelperBase{
     click(By.name("remove"));
   }
 
-  public void selectDateOfBirthByIndex(int i) {
-    Select s = new Select(wd.findElement(By.xpath("//div[@id='content']/form/select[1]")));
-    s.selectByIndex(i);
+//  public void selectDateOfBirthByIndex(int i) {
+//    Select s = new Select(wd.findElement(By.xpath("//div[@id='content']/form/select[1]")));
+//    s.selectByIndex(i);
+//  }
+
+  public void selectGroupInBottom(){
+    click(By.xpath("//form[@id='right']/select//option[3]"));
   }
 
+//  public void selectGroupForContactByIndex(int i) {
+//    Select s = new Select(wd.findElement(By.xpath("//div[@class='right']/select")));
+//    s.selectByIndex(i);
+//  }
+
+ public void selectDateOfBirthByIndex(int i) {
+   select(By.xpath("//div[@id='content']/form/select[1]"), i);
+ }
   public void selectGroupForContactByIndex(int i) {
-    Select s = new Select(wd.findElement(By.xpath("//div[@class='right']/select")));
-    s.selectByIndex(i);
+    select(By.xpath("//div[@class='right']/select[1]"), i);
   }
+
+
 
 }
