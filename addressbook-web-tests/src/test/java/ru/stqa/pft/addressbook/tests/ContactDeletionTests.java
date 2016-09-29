@@ -6,25 +6,25 @@ public class ContactDeletionTests extends TestBase {
     
     @Test
     public void testContactDeletion() {
-        app.getContactHelper().observeContact();
+        app.getNavigationHelper().gotoHomePage();
         app.getContactHelper().clickSelectedContact();
         app.getContactHelper().deleteSelectedContact();
-        app.getContactHelper().observeContact();
+        app.getNavigationHelper().gotoHomePage();
     }
 
     @Test
     public void testContactDeletionThroughEditMenu() {
-        app.getContactHelper().observeContact();
+        app.getNavigationHelper().gotoHomePage();
         app.getContactHelper().initContactModification();
         app.getContactHelper().deleteSelectedContactFromEditForm();
-        app.getContactHelper().observeContact();
+        app.getNavigationHelper().gotoHomePage();
     }
 
     @Test
     public void testDeleteAllContacts() {
-        app.getContactHelper().observeContact();
+        app.getNavigationHelper().gotoHomePage();
         app.getContactHelper().selectAllRecords();
         app.getContactHelper().deleteSelectedContact();
-        app.getContactHelper().observeContact();
+        app.getNavigationHelper().gotoHomePage();
     }
 }

@@ -14,10 +14,28 @@ public class NavigationHelper extends HelperBase{
   }
 
   public void gotoGroupPage() {
+    if(isElementPresent(By.cssSelector("#header div.cf>h1>a"))
+            && wd.findElement(By.cssSelector("#header div.cf>h1>a")).getText().equals("Groups")
+            && isElementPresent(By.name("new"))){
+      return;
+    }
     click(By.linkText("groups"));
   }
 
-    public void goToCreateNewContactPage() {
+  public void goToCreateNewContactPage() {
+    if(isElementPresent(By.cssSelector("#header div.cf>h1>a"))
+            && wd.findElement(By.cssSelector("#header div.cf>h1>a")).getText().equals("Edit / add address book entry")
+            && isElementPresent(By.name("submit"))){
+      return;
+    }
     goToPage("http://localhost/addressbook/edit.php");
+  }
+
+  public void gotoHomePage() {
+    if(isElementPresent(By.id("maintable"))){
+
+      return;
+    }
+    click(By.linkText("home"));
   }
 }

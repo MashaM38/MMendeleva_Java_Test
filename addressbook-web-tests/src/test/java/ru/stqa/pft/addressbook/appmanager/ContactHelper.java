@@ -34,10 +34,6 @@ public class ContactHelper extends HelperBase{
     }
   }
 
-  public void observeContact() {
-    click(By.linkText("home"));
-  }
-
   public void submitNewContact() {
     doubleClick(By.xpath("//div[@id='content']/form/input[21]"));
   }
@@ -111,7 +107,4 @@ public class ContactHelper extends HelperBase{
   public void selectGroupForContactByValue(String text) {
     selectElementFromDropDownByVisibleText(By.xpath("//div[@class='right']/select[1]"), text);
   }
-
-
-
 }
