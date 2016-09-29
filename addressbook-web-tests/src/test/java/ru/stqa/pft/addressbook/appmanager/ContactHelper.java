@@ -2,8 +2,8 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 
 /**
@@ -15,7 +15,7 @@ public class ContactHelper extends HelperBase{
     super(wd);
   }
 
-  public void fillContactData(ContactData contactData) {
+  public void fillContactData(ContactData contactData, boolean creation) {
     type(By.name("firstname"), contactData.getName());
     type(By.name("lastname"), contactData.getSurname());
     type(By.name("company"), contactData.getCompany());
@@ -23,6 +23,15 @@ public class ContactHelper extends HelperBase{
     type(By.name("home"), contactData.getHomePhone());
     type(By.name("email"), contactData.getEmail());
     type(By.name("notes"), contactData.getNotes());
+
+    if(contactData.getGroup() != null) {
+      if (creation) {
+        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      }
+      else {
+        Assert.assertFalse(isElementPresent(By.name("new_group")));
+      }
+    }
   }
 
   public void observeContact() {
@@ -31,7 +40,6 @@ public class ContactHelper extends HelperBase{
 
   public void submitNewContact() {
     doubleClick(By.xpath("//div[@id='content']/form/input[21]"));
-    //new Actions(wd).doubleClick(wd.findElement(By.xpath("//div[@id='content']/form/input[21]"))).build().perform();
   }
 
   public void submitNewContactWithButtonOnTop(){
@@ -91,33 +99,17 @@ public class ContactHelper extends HelperBase{
     doubleClick(By.name("add"));
   }
 
-  public void goToGroup(){
-    click(By.xpath("//div/div[4]/div/i/a"));
-  }
-
-  public void removeFromGroup(){
-    click(By.name("remove"));
-  }
-
-//  public void selectDateOfBirthByIndex(int i) {
-//    Select s = new Select(wd.findElement(By.xpath("//div[@id='content']/form/select[1]")));
-//    s.selectByIndex(i);
-//  }
-
-  public void selectGroupInBottom(){
-    click(By.xpath("//form[@id='right']/select//option[3]"));
-  }
-
-//  public void selectGroupForContactByIndex(int i) {
-//    Select s = new Select(wd.findElement(By.xpath("//div[@class='right']/select")));
-//    s.selectByIndex(i);
-//  }
-
- public void selectDateOfBirthByIndex(int i) {
-   select(By.xpath("//div[@id='content']/form/select[1]"), i);
+ public void selectDateOfBirthByValue(String value) {
+   String existingDate = new Select(wd.findElement(By.xpath("//div[@id='content']/form/select[1]"))).getFirstSelectedOption().getText();
+   if(value != null) {
+     if (!value.equals(existingDate)) {
+       selectElementFromDropDownByVisibleText(By.xpath("//div[@id='content']/form/select[1]"), value);
+     }
+   }
  }
-  public void selectGroupForContactByIndex(int i) {
-    select(By.xpath("//div[@class='right']/select[1]"), i);
+
+  public void selectGroupForContactByValue(String text) {
+    selectElementFromDropDownByVisibleText(By.xpath("//div[@class='right']/select[1]"), text);
   }
 
 

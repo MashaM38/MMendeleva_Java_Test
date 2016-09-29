@@ -2,8 +2,6 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import ru.stqa.pft.addressbook.model.GroupData;
 
@@ -28,6 +26,14 @@ public class GroupHelper extends HelperBase{
     type(By.name("group_name"), groupData.getName());
     type(By.name("group_header"), groupData.getHeader());
     type(By.name("group_footer"), groupData.getFooter());
+
+    if(groupData.getGroup() != null){
+      String existingGroup = new Select(wd.findElement(By.xpath("//div[@id='content']/form/select[1]"))).getFirstSelectedOption().getText();
+
+      if(!groupData.getGroup().equals(existingGroup)) {
+        selectElementFromDropDownByVisibleText(By.name("group_parent_id"), groupData.getGroup());
+      }
+    }
   }
 
   public void initGroupCreation() {
@@ -52,10 +58,6 @@ public class GroupHelper extends HelperBase{
 
   public void selectOneMoreGroup() {
     click(By.xpath("//div[@id='content']/form/span[2]/input"));
-  }
-
-  public void selectParentGroupByIndex(int i) {
-      select(By.xpath("//div[@id='content']/form/select[1]"), i);
   }
 
   public void initGroupModification() {

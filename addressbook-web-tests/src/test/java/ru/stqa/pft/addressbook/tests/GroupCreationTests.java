@@ -10,17 +10,17 @@ public class GroupCreationTests extends TestBase {
   public void testGroupCreation() {
     app.getNavigationHelper().gotoGroupPage();
     app.getGroupHelper().initGroupCreation();
-    app.getGroupHelper().fillGroupForm(new GroupData("ddd", null, null));
+    app.getGroupHelper().fillGroupForm(new GroupData("group1", null, null, null));
     app.getGroupHelper().submitGroupCreation();
     app.getGroupHelper().returnToGroupPage();
     app.getNavigationHelper().gotoGroupPage();
   }
 
   @Test
-  public void testGroupCreationWithNewButtonInBottom() {
+  public void testGroupCreationSelectNewButtonInBottom() {
     app.getNavigationHelper().gotoGroupPage();
     app.getGroupHelper().initGroupCreationWithNewButtonInBottom();
-    app.getGroupHelper().fillGroupForm(new GroupData("222", "222", "222"));
+    app.getGroupHelper().fillGroupForm(new GroupData("group2", "group2", "group2", "group1"));
     app.getGroupHelper().submitGroupCreation();
     app.getGroupHelper().returnToGroupPage();
   }
@@ -29,8 +29,8 @@ public class GroupCreationTests extends TestBase {
   public void testGroupCreationSelectNoneParentGroup() {
     app.getNavigationHelper().gotoGroupPage();
     app.getGroupHelper().initGroupCreationWithNewButtonInBottom();
-    app.getGroupHelper().selectParentGroupByIndex(0);
-    app.getGroupHelper().fillGroupForm(new GroupData("3333", "3333", "3333"));
+    //app.getGroupHelper().selectParentGroupByIndex();
+    app.getGroupHelper().fillGroupForm(new GroupData("group3", "group3", "group3", ""));
     app.getGroupHelper().submitGroupCreation();
     app.getGroupHelper().returnToGroupPage();
   }
@@ -39,8 +39,8 @@ public class GroupCreationTests extends TestBase {
   public void testGroupCreationSelectSomeParentGroup() {
     app.getNavigationHelper().gotoGroupPage();
     app.getGroupHelper().initGroupCreationWithNewButtonInBottom();
-    app.getGroupHelper().selectParentGroupByIndex(1);
-    app.getGroupHelper().fillGroupForm(new GroupData("4444", "4444", "4444"));
+    //app.getGroupHelper().selectParentGroupByIndex(1);
+    app.getGroupHelper().fillGroupForm(new GroupData("group4", "group4", "group4", "group2"));
     app.getGroupHelper().submitGroupCreation();
     app.getGroupHelper().returnToGroupPage();
   }
@@ -49,7 +49,7 @@ public class GroupCreationTests extends TestBase {
   public void testGroupCreationSelectParentGroupOnly() {
     app.getNavigationHelper().gotoGroupPage();
     app.getGroupHelper().initGroupCreationWithNewButtonInBottom();
-    app.getGroupHelper().selectParentGroupByIndex(1);
+    app.getGroupHelper().fillGroupForm(new GroupData(null, null, null, "group1"));
     app.getGroupHelper().submitGroupCreation();
     app.getGroupHelper().returnToGroupPage();
   }
