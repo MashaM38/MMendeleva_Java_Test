@@ -11,6 +11,11 @@ public class ContactModificationTests extends TestBase{
   @Test
   public void testModifyContactFieldsLeaveTheSameFields() {
     app.getNavigationHelper().gotoHomePage();
+    if(! app.getContactHelper().isThereContact()){
+      app.getNavigationHelper().goToCreateNewContactPage();
+      app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"), true);
+      app.getNavigationHelper().gotoHomePage();
+    }
     app.getContactHelper().clickSelectedContact();
     app.getContactHelper().initContactModification();
     app.getContactHelper().fillContactData(new ContactData(null, null, null, null, null, null, null, null), true);
@@ -23,6 +28,11 @@ public class ContactModificationTests extends TestBase{
   @Test
   public void testSelectedSingleContactModification() {
     app.getNavigationHelper().gotoHomePage();
+    if(! app.getContactHelper().isThereContact()){
+      app.getNavigationHelper().goToCreateNewContactPage();
+      app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"), true);
+      app.getNavigationHelper().gotoHomePage();
+    }
     app.getContactHelper().clickSelectedContact();
     app.getContactHelper().initContactModification();
     app.getContactHelper().fillContactData(new ContactData("user5", "user5Surname", "222COMP", "222Some address", "222+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", null), false);
@@ -34,9 +44,12 @@ public class ContactModificationTests extends TestBase{
   @Test
   public void testContactModification() {
     app.getNavigationHelper().gotoHomePage();
-    app.getContactHelper().initContactModification();
-    app.getContactHelper().fillContactData(new ContactData("user6", "user6Surname", "222COMP", "222Some address", "222+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", null), false);
-    app.getContactHelper().submitContactModification();
+    if(! app.getContactHelper().isThereContact()){
+      app.getNavigationHelper().goToCreateNewContactPage();
+      app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"), true);
+      app.getNavigationHelper().gotoHomePage();
+    }
+    app.getContactHelper().performContactModification(new ContactData("user6", "user6Surname", "222COMP", "222Some address", "222+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", null), false);
     app.getNavigationHelper().gotoHomePage();
   }
 
@@ -52,6 +65,11 @@ public class ContactModificationTests extends TestBase{
   @Test
   public void testModifyContactWithInfo() {
     app.getNavigationHelper().gotoHomePage();
+    if(! app.getContactHelper().isThereContact()){
+      app.getNavigationHelper().goToCreateNewContactPage();
+      app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"), true);
+      app.getNavigationHelper().gotoHomePage();
+    }
      app.getContactHelper().clickSelectedContact();
      app.getContactHelper().initContactModifyWithInfo();
      app.getContactHelper().modifyContact();
@@ -63,6 +81,11 @@ public class ContactModificationTests extends TestBase{
     @Test
     public void testModifyGroupForContact() {
       app.getNavigationHelper().gotoHomePage();
+      if(! app.getContactHelper().isThereContact()){
+        app.getNavigationHelper().goToCreateNewContactPage();
+        app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"), true);
+        app.getNavigationHelper().gotoHomePage();
+      }
       app.getContactHelper().clickSelectedContact();
       app.getContactHelper().selectGroupForContactByValue("group3");
       app.getContactHelper().addContactsToGroup();

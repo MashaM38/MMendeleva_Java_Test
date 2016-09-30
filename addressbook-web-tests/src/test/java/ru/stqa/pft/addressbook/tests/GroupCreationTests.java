@@ -9,11 +9,7 @@ public class GroupCreationTests extends TestBase {
   @Test
   public void testGroupCreation() {
     app.getNavigationHelper().gotoGroupPage();
-    app.getGroupHelper().initGroupCreation();
-    app.getGroupHelper().fillGroupForm(new GroupData("group1", null, null, null));
-    app.getGroupHelper().submitGroupCreation();
-    app.getGroupHelper().returnToGroupPage();
-    app.getNavigationHelper().gotoGroupPage();
+    app.getGroupHelper().createGroup(new GroupData("group1", null, null, null));
   }
 
   @Test
@@ -28,30 +24,19 @@ public class GroupCreationTests extends TestBase {
   @Test
   public void testGroupCreationSelectNoneParentGroup() {
     app.getNavigationHelper().gotoGroupPage();
-    app.getGroupHelper().initGroupCreationWithNewButtonInBottom();
-    //app.getGroupHelper().selectParentGroupByIndex();
-    app.getGroupHelper().fillGroupForm(new GroupData("group3", "group3", "group3", ""));
-    app.getGroupHelper().submitGroupCreation();
-    app.getGroupHelper().returnToGroupPage();
+    app.getGroupHelper().createGroup(new GroupData("group3", "group3", "group3", ""));
   }
 
   @Test
   public void testGroupCreationSelectSomeParentGroup() {
     app.getNavigationHelper().gotoGroupPage();
-    app.getGroupHelper().initGroupCreationWithNewButtonInBottom();
-    //app.getGroupHelper().selectParentGroupByIndex(1);
-    app.getGroupHelper().fillGroupForm(new GroupData("group4", "group4", "group4", "group2"));
-    app.getGroupHelper().submitGroupCreation();
-    app.getGroupHelper().returnToGroupPage();
+    app.getGroupHelper().createGroup(new GroupData("group4", "group4", "group4", "group2"));
   }
 
   @Test
   public void testGroupCreationSelectParentGroupOnly() {
     app.getNavigationHelper().gotoGroupPage();
-    app.getGroupHelper().initGroupCreationWithNewButtonInBottom();
-    app.getGroupHelper().fillGroupForm(new GroupData(null, null, null, "group1"));
-    app.getGroupHelper().submitGroupCreation();
-    app.getGroupHelper().returnToGroupPage();
+    app.getGroupHelper().createGroup(new GroupData(null, null, null, "group1"));
   }
 
   @Test

@@ -107,4 +107,19 @@ public class ContactHelper extends HelperBase{
   public void selectGroupForContactByValue(String text) {
     selectElementFromDropDownByVisibleText(By.xpath("//div[@class='right']/select[1]"), text);
   }
+
+  public void createContact(ContactData contactData, boolean creation) {
+    fillContactData(contactData, creation);
+    submitNewContact();
+  }
+
+  public boolean isThereContact() {
+    return isElementPresent(By.name("selected[]"));
+  }
+
+  public void performContactModification(ContactData contactData, boolean creation) {
+    initContactModification();
+    fillContactData(contactData, creation);
+    submitContactModification();
+  }
 }

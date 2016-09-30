@@ -80,4 +80,22 @@ public class GroupHelper extends HelperBase{
       boolean isPresent = wd.findElement(By.xpath("//div[@id='content']//b[.='Notice']")).isDisplayed();
       return isPresent;
   }
+
+  public void createGroup(GroupData group) {
+    initGroupCreation();
+    fillGroupForm(group);
+    submitGroupCreation();
+    returnToGroupPage();
+  }
+
+  public boolean isThereAGroup() {
+    return isElementPresent((By.name("selected[]")));
+  }
+
+  public void modifyGroup(GroupData group){
+    initGroupModification();
+    fillGroupForm(group);
+    submitGroupModification();
+    returnToGroupPage();
+  }
 }

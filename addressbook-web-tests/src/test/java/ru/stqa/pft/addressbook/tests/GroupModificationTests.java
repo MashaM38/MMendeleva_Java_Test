@@ -12,57 +12,60 @@ public class GroupModificationTests extends TestBase{
   @Test
   public void testGroupModification(){
     app.getNavigationHelper().gotoGroupPage();
+    if(! app.getGroupHelper().isThereAGroup()){
+      app.getGroupHelper().createGroup(new GroupData("group1", null, null, null));
+    }
     app.getGroupHelper().selectGroup();
-    app.getGroupHelper().initGroupModification();
-    app.getGroupHelper().fillGroupForm(new GroupData("1group1", "newHeader", "newFooter", null));
-    app.getGroupHelper().submitGroupModification();
-    app.getGroupHelper().returnToGroupPage();
+    app.getGroupHelper().modifyGroup(new GroupData("1group1", "newHeader", "newFooter", null));
   }
 
   @Test
   public void testGroupModificationNotChangedFields(){
     app.getNavigationHelper().gotoGroupPage();
+    if(! app.getGroupHelper().isThereAGroup()){
+      app.getGroupHelper().createGroup(new GroupData("1group1", "newHeader", "newFooter", null));
+    }
     app.getGroupHelper().selectGroup();
-    app.getGroupHelper().initGroupModification();
-    app.getGroupHelper().fillGroupForm(new GroupData("1group1", "newHeader", "newFooter", null));
-    app.getGroupHelper().submitGroupModification();
-    app.getGroupHelper().returnToGroupPage();
+    app.getGroupHelper().modifyGroup(new GroupData("1group1", "newHeader", "newFooter", null));
   }
 
   @Test
   public void testGroupModificationParentGroupSelected(){
     app.getNavigationHelper().gotoGroupPage();
+    if(! app.getGroupHelper().isThereAGroup()){
+      app.getGroupHelper().createGroup(new GroupData("group1", null, null, null));
+    }
     app.getGroupHelper().selectGroup();
-    app.getGroupHelper().initGroupModification();
-    app.getGroupHelper().fillGroupForm(new GroupData("group5", "newHeader", "newFooter", "group1"));
-    app.getGroupHelper().submitGroupModification();
-    app.getGroupHelper().returnToGroupPage();
+    app.getGroupHelper().modifyGroup(new GroupData("group5", "newHeader", "newFooter", "group2"));
   }
 
   @Test
-  public void testGroupModificationParentGroupSelectedSame(){
+  public void testGroupModificationForSameGroup(){
     app.getNavigationHelper().gotoGroupPage();
+    if(! app.getGroupHelper().isThereAGroup()){
+      app.getGroupHelper().createGroup(new GroupData("group1", null, null, null));
+    }
     app.getGroupHelper().selectGroup();
-    app.getGroupHelper().initGroupModification();
-    app.getGroupHelper().fillGroupForm(new GroupData("group6", "newHeader", "newFooter", "group1"));
-    app.getGroupHelper().submitGroupModification();
-    app.getGroupHelper().returnToGroupPage();
+    app.getGroupHelper().modifyGroup(new GroupData("group6", "newHeader", "newFooter", "group1"));
   }
 
   @Test
-  public void testGroupModificationParentGroupSelectedSameNot(){
+  public void testGroupModificationForSameGroupNot(){
     app.getNavigationHelper().gotoGroupPage();
+    if(! app.getGroupHelper().isThereAGroup()){
+      app.getGroupHelper().createGroup(new GroupData("group2", null, null, null));
+    }
     app.getGroupHelper().selectGroup();
-    app.getGroupHelper().initGroupModification();
-    app.getGroupHelper().fillGroupForm(new GroupData("group7", "newHeader", "newFooter", "group2"));//ddd
-    app.getGroupHelper().submitGroupModification();
-    app.getGroupHelper().returnToGroupPage();
+    app.getGroupHelper().modifyGroup(new GroupData("group7", "newHeader", "newFooter", "group2"));
   }
 
 
   @Test
   public void testUndefinedGroupModification(){
     app.getNavigationHelper().gotoGroupPage();
+    if(! app.getGroupHelper().isThereAGroup()){
+      app.getGroupHelper().createGroup(new GroupData("group1", null, null, null));
+    }
     app.getGroupHelper().initGroupModification();
     //Assert.assertEquals(app.getGroupHelper().checkIfErrorMessageIsPresentOnPage(), false);    /* attempt to check if notice is present on group page or not*/
     app.getGroupHelper().submitGroupModification();
@@ -73,6 +76,9 @@ public class GroupModificationTests extends TestBase{
   @Test
   public void testUndefinedGroupModificationSetFields(){
      app.getNavigationHelper().gotoGroupPage();
+    if(! app.getGroupHelper().isThereAGroup()){
+      app.getGroupHelper().createGroup(new GroupData("group1", null, null, null));
+    }
      app.getGroupHelper().initGroupModification();
      app.getGroupHelper().fillGroupForm(new GroupData("group8", "newHeader", "newFooter", null));
      app.getGroupHelper().submitGroupModification();
@@ -83,6 +89,9 @@ public class GroupModificationTests extends TestBase{
   @Test
   public void testGroupModificationEditNothing(){
      app.getNavigationHelper().gotoGroupPage();
+    if(! app.getGroupHelper().isThereAGroup()){
+      app.getGroupHelper().createGroup(new GroupData("groupX", null, null, null));
+    }
      app.getGroupHelper().selectGroup();
      app.getGroupHelper().initGroupModification();
      app.getGroupHelper().submitGroupModification();
@@ -92,40 +101,40 @@ public class GroupModificationTests extends TestBase{
   @Test
   public void testGroupModificationCreateNewGroup(){
      app.getNavigationHelper().gotoGroupPage();
-     app.getGroupHelper().initGroupModification();
-     app.getGroupHelper().fillGroupForm(new GroupData("new1", "new1", "new1", null));
-     app.getGroupHelper().submitGroupModification();
-     app.getGroupHelper().returnToGroupPage();
+    if(! app.getGroupHelper().isThereAGroup()){
+      app.getGroupHelper().createGroup(new GroupData("groupNew", null, null, null));
+    }
+    app.getGroupHelper().modifyGroup(new GroupData("new1", "new1", "new1", null));
   }
 
   @Test
   public void testGroupModificationSetEmptyFields(){
      app.getNavigationHelper().gotoGroupPage();
-     app.getGroupHelper().selectGroup();
-     app.getGroupHelper().initGroupModification();
-     app.getGroupHelper().fillGroupForm(new GroupData("", "", "", null));
-     app.getGroupHelper().submitGroupModification();
-     app.getGroupHelper().returnToGroupPage();
+    if(! app.getGroupHelper().isThereAGroup()){
+      app.getGroupHelper().createGroup(new GroupData("groupEmpty", null, null, null));
+    }
+    app.getGroupHelper().selectGroup();
+    app.getGroupHelper().modifyGroup(new GroupData("", "", "", null));
   }
 
     @Test
     public void testGroupModificationOnlyParentGroup(){
         app.getNavigationHelper().gotoGroupPage();
-        app.getGroupHelper().selectGroup();
-        app.getGroupHelper().initGroupModification();
-        app.getGroupHelper().fillGroupForm(new GroupData(null, null, null, "group3"));
-        app.getGroupHelper().submitGroupModification();
-        app.getGroupHelper().returnToGroupPage();
+      if(! app.getGroupHelper().isThereAGroup()){
+        app.getGroupHelper().createGroup(new GroupData("updatedGroupName", null, null, null));
+      }
+      app.getGroupHelper().selectGroup();
+      app.getGroupHelper().modifyGroup(new GroupData(null, null, null, "group2"));
     }
 
     @Test
     public void testModifyOnlyGroupName(){
         app.getNavigationHelper().gotoGroupPage();
-        app.getGroupHelper().selectGroup();
-        app.getGroupHelper().initGroupModification();
-        app.getGroupHelper().fillGroupForm(new GroupData("updatedGroupName", null, null, null));
-        app.getGroupHelper().submitGroupModification();
-        app.getGroupHelper().returnToGroupPage();
+      if(! app.getGroupHelper().isThereAGroup()){
+        app.getGroupHelper().createGroup(new GroupData("groupToUpd", null, null, null));
+      }
+      app.getGroupHelper().selectGroup();
+      app.getGroupHelper().modifyGroup(new GroupData("updatedGroupName", null, null, null));
     }
 
 }
