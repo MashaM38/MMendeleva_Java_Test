@@ -2,9 +2,13 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Masha on 21.09.2016.
@@ -46,9 +50,9 @@ public class ContactHelper extends HelperBase{
     click(By.xpath("//div[@class='msgbox']//a[.='add next']"));
   }
 
-  public void clickSelectedContact(){
-    if (!wd.findElement(By.name("selected[]")).isSelected()) {
-      click(By.name("selected[]"));
+  public void clickSelectedContact(int index){
+    {
+      wd.findElements(By.name("selected[]")).get(index).click();
     }
   }
 
@@ -121,5 +125,28 @@ public class ContactHelper extends HelperBase{
     initContactModification();
     fillContactData(contactData, creation);
     submitContactModification();
+  }
+
+  public int getContactCount() {
+    return wd.findElements(By.name("selected[]")).size();
+  }
+
+  public List<ContactData> getContactList() {
+    List<ContactData> contacts = new ArrayList<>();
+    WebElement baseTable = wd.findElement(By.id("maintable"));
+    List<WebElement> rows = baseTable.findElements(By.tagName("tr"));
+
+    /* Первый ряд таблицы - шапка,в ней нет элемента "td", поэтому индексация строк таблицы начинается с 1-цы*/
+    for(int i = 1; i < rows.size(); i++) {
+
+      List<WebElement> cells = rows.get(i).findElements(By.tagName("td"));
+
+      String lastName = cells.get(1).getText();
+      String firstName = cells.get(2).getText();
+
+      ContactData contact = new ContactData(firstName, lastName, null, null, null, null, null, null);
+      contacts.add(contact);
+    }
+    return contacts;
   }
 }

@@ -1,7 +1,11 @@
 package ru.stqa.pft.addressbook.tests;
 
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
+
+import java.util.List;
 
 public class ContactDeletionTests extends TestBase {
     
@@ -13,9 +17,12 @@ public class ContactDeletionTests extends TestBase {
             app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"), true);
             app.getNavigationHelper().gotoHomePage();
         }
-        app.getContactHelper().clickSelectedContact();
+        List<ContactData> before = app.getContactHelper().getContactList();
+        app.getContactHelper().clickSelectedContact(before.size() - 1);
         app.getContactHelper().deleteSelectedContact();
         app.getNavigationHelper().gotoHomePage();
+        List<ContactData> after = app.getContactHelper().getContactList();
+        Assert.assertEquals(after.size(), before.size() - 1);
     }
 
     @Test
