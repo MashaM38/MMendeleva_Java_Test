@@ -12,11 +12,14 @@ public class GroupModificationTests extends TestBase{
   @Test
   public void testGroupModification(){
     app.getNavigationHelper().gotoGroupPage();
+    int before = app.getGroupHelper().getGroupCount();
     if(! app.getGroupHelper().isThereAGroup()){
       app.getGroupHelper().createGroup(new GroupData("group1", null, null, null));
     }
     app.getGroupHelper().selectGroup();
     app.getGroupHelper().modifyGroup(new GroupData("1group1", "newHeader", "newFooter", null));
+    int after = app.getGroupHelper().getGroupCount();
+    Assert.assertEquals(after, before);
   }
 
   @Test
