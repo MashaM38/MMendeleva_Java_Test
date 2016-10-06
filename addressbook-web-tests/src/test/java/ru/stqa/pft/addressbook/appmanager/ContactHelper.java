@@ -19,7 +19,7 @@ public class ContactHelper extends HelperBase{
     super(wd);
   }
 
-  public void fillContactData(ContactData contactData, boolean creation) {
+  public void fillContactData(ContactData contactData) {
     type(By.name("firstname"), contactData.getName());
     type(By.name("lastname"), contactData.getSurname());
     type(By.name("company"), contactData.getCompany());
@@ -29,13 +29,8 @@ public class ContactHelper extends HelperBase{
     type(By.name("notes"), contactData.getNotes());
 
     if(contactData.getGroup() != null) {
-      if (creation) {
         new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
       }
-      else {
-        Assert.assertFalse(isElementPresent(By.name("new_group")));
-      }
-    }
   }
 
   public void submitNewContact() {
@@ -112,8 +107,8 @@ public class ContactHelper extends HelperBase{
     selectElementFromDropDownByVisibleText(By.xpath("//div[@class='right']/select[1]"), text);
   }
 
-  public void createContact(ContactData contactData, boolean creation) {
-    fillContactData(contactData, creation);
+  public void createContact(ContactData contactData) {
+    fillContactData(contactData);
     submitNewContact();
   }
 
@@ -121,9 +116,9 @@ public class ContactHelper extends HelperBase{
     return isElementPresent(By.name("selected[]"));
   }
 
-  public void performContactModification(ContactData contactData, boolean creation) {
+  public void performContactModification(ContactData contactData) {
     initContactModification();
-    fillContactData(contactData, creation);
+    fillContactData(contactData);
     submitContactModification();
   }
 
@@ -144,7 +139,7 @@ public class ContactHelper extends HelperBase{
       String lastName = cells.get(1).getText();
       String firstName = cells.get(2).getText();
 
-      ContactData contact = new ContactData(firstName, lastName, null, null, null, null, null, null);
+      ContactData contact = new ContactData(i, firstName, lastName, null, null, null, null, null, null);
       contacts.add(contact);
     }
     return contacts;

@@ -14,7 +14,7 @@ public class ContactDeletionTests extends TestBase {
         app.getNavigationHelper().gotoHomePage();
         if(! app.getContactHelper().isThereContact()){
             app.getNavigationHelper().goToCreateNewContactPage();
-            app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"), true);
+            app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"));
             app.getNavigationHelper().gotoHomePage();
         }
         List<ContactData> before = app.getContactHelper().getContactList();
@@ -23,6 +23,9 @@ public class ContactDeletionTests extends TestBase {
         app.getNavigationHelper().gotoHomePage();
         List<ContactData> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after.size(), before.size() - 1);
+
+        before.remove(before.size() - 1);
+        Assert.assertEquals(before, after);
     }
 
     @Test
@@ -30,7 +33,7 @@ public class ContactDeletionTests extends TestBase {
         app.getNavigationHelper().gotoHomePage();
         if(! app.getContactHelper().isThereContact()){
             app.getNavigationHelper().goToCreateNewContactPage();
-            app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"), true);
+            app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"));
             app.getNavigationHelper().gotoHomePage();
         }
         app.getContactHelper().initContactModification();
@@ -43,7 +46,7 @@ public class ContactDeletionTests extends TestBase {
         app.getNavigationHelper().gotoHomePage();
         if(! app.getContactHelper().isThereContact()){
             app.getNavigationHelper().goToCreateNewContactPage();
-            app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"), true);
+            app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"));
             app.getNavigationHelper().gotoHomePage();
         }
         app.getContactHelper().selectAllRecords();

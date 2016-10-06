@@ -4,7 +4,9 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.GroupData;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -17,18 +19,21 @@ public class ContactModificationTests extends TestBase{
     app.getNavigationHelper().gotoHomePage();
     if(! app.getContactHelper().isThereContact()){
       app.getNavigationHelper().goToCreateNewContactPage();
-      app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"), true);
+      app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group1"));
       app.getNavigationHelper().gotoHomePage();
     }
     List<ContactData> before = app.getContactHelper().getContactList();
     app.getContactHelper().clickSelectedContact(before.size() - 1);
     app.getContactHelper().initContactModification();
-    app.getContactHelper().fillContactData(new ContactData(null, null, null, null, null, null, null, null), true);
+    ContactData contact = new ContactData(before.get(before.size() - 1).getId(), null, null, null, null, null, null, null, null);
+    app.getContactHelper().fillContactData(contact);
     app.getContactHelper().selectDateOfBirthByValue("7");
     app.getContactHelper().submitContactModification();
     app.getNavigationHelper().gotoHomePage();
     List<ContactData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size());
+
+    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
   }
 
 
@@ -38,12 +43,12 @@ public class ContactModificationTests extends TestBase{
     int before = app.getContactHelper().getContactCount();
     if(! app.getContactHelper().isThereContact()){
       app.getNavigationHelper().goToCreateNewContactPage();
-      app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"), true);
+      app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"));
       app.getNavigationHelper().gotoHomePage();
     }
     app.getContactHelper().clickSelectedContact(before - 1);
     app.getContactHelper().initContactModification();
-    app.getContactHelper().fillContactData(new ContactData("user5", "user5Surname", "222COMP", "222Some address", "222+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", null), false);
+    app.getContactHelper().fillContactData(new ContactData("user5", "user5Surname", "222COMP", "222Some address", "222+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", null));
     app.getContactHelper().selectDateOfBirthByValue("9");
     app.getContactHelper().submitContactModification();
     app.getNavigationHelper().gotoHomePage();
@@ -55,10 +60,10 @@ public class ContactModificationTests extends TestBase{
     int before = app.getContactHelper().getContactCount();
     if(! app.getContactHelper().isThereContact()){
       app.getNavigationHelper().goToCreateNewContactPage();
-      app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"), true);
+      app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"));
       app.getNavigationHelper().gotoHomePage();
     }
-    app.getContactHelper().performContactModification(new ContactData("user6", "user6Surname", "222COMP", "222Some address", "222+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", null), false);
+    app.getContactHelper().performContactModification(new ContactData("user6", "user6Surname", "222COMP", "222Some address", "222+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", null));
     app.getNavigationHelper().gotoHomePage();
   }
 
@@ -66,7 +71,7 @@ public class ContactModificationTests extends TestBase{
   public void testContactModificationWithUpdateButtonOnTop() {
     app.getNavigationHelper().gotoHomePage();
     app.getContactHelper().initContactModification();
-    app.getContactHelper().fillContactData(new ContactData("user7", "user7Surname", "222COMP", "222Some address", "222+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", null), false);
+    app.getContactHelper().fillContactData(new ContactData("user7", "user7Surname", "222COMP", "222Some address", "222+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", null));
     app.getContactHelper().submitContactModificationWitUpdateButtonOnTop();
     app.getNavigationHelper().gotoHomePage();
   }
@@ -77,13 +82,13 @@ public class ContactModificationTests extends TestBase{
     int before = app.getContactHelper().getContactCount();
     if(! app.getContactHelper().isThereContact()){
       app.getNavigationHelper().goToCreateNewContactPage();
-      app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"), true);
+      app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"));
       app.getNavigationHelper().gotoHomePage();
     }
      app.getContactHelper().clickSelectedContact(before - 1);
      app.getContactHelper().initContactModifyWithInfo();
      app.getContactHelper().modifyContact();
-     app.getContactHelper().fillContactData(new ContactData("user8", "333User1Surname", "222COMP", "222Some address", "222+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", null), false);
+     app.getContactHelper().fillContactData(new ContactData("user8", "333User1Surname", "222COMP", "222Some address", "222+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", null));
      app.getContactHelper().submitContactModificationWitUpdateButtonOnTop();
     app.getNavigationHelper().gotoHomePage();
   }
@@ -94,7 +99,7 @@ public class ContactModificationTests extends TestBase{
       int before = app.getContactHelper().getContactCount();
       if(! app.getContactHelper().isThereContact()){
         app.getNavigationHelper().goToCreateNewContactPage();
-        app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"), true);
+        app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"));
         app.getNavigationHelper().gotoHomePage();
       }
       app.getContactHelper().clickSelectedContact(before - 1);
