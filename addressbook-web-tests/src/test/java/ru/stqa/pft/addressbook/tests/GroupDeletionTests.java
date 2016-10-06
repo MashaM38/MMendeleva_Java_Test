@@ -20,32 +20,47 @@ public class GroupDeletionTests extends TestBase {
         app.getGroupHelper().returnToGroupPage();
         List<GroupData> after = app.getGroupHelper().getGroupList();
         Assert.assertEquals(after.size(), before.size() - 1);
+
+        before.remove(before.size() - 1);
+        Assert.assertEquals(before, after);
     }
 
     @Test
     public void testGroupDeletionWithBottomDeleteButton() {
         app.getNavigationHelper().gotoGroupPage();
-        int before = app.getGroupHelper().getGroupCount();
         if(! app.getGroupHelper().isThereAGroup()){
             app.getGroupHelper().createGroup(new GroupData("group1", null, null, null));
         }
-        app.getGroupHelper().selectGroup(before - 1);
+        List<GroupData> before = app.getGroupHelper().getGroupList();
+        app.getGroupHelper().selectGroup(before.size() - 1);
         app.getGroupHelper().deleteSelectedGroupsWithBottomDeleteButton();
         app.getGroupHelper().returnToGroupPage();
+        List<GroupData> after = app.getGroupHelper().getGroupList();
+        before.remove(before.size() - 1);
+        Assert.assertEquals(before, after);
+
+        before.remove(before.size() - 1);
+        Assert.assertEquals(before, after);
     }
 
     @Test
     public void testGroupDeletionSelectSeveralGroups() {
         app.getNavigationHelper().gotoGroupPage();
-        int before = app.getGroupHelper().getGroupCount();
         if(! app.getGroupHelper().isThereAGroup()){
             app.getGroupHelper().createGroup(new GroupData("group1", null, null, null));
             app.getGroupHelper().createGroup(new GroupData("group2", null, null, null));
         }
-        app.getGroupHelper().selectGroup(before - 1);
+        List<GroupData> before = app.getGroupHelper().getGroupList();
+        app.getGroupHelper().selectGroup(before.size() - 1);
         app.getGroupHelper().selectOneMoreGroup();
         app.getGroupHelper().deleteSelectedGroupsWithBottomDeleteButton();
         app.getGroupHelper().returnToGroupPage();
+        List<GroupData> after = app.getGroupHelper().getGroupList();
+        before.remove(before.size() - 1);
+        Assert.assertEquals(before, after);
+
+        before.remove(before.size() - 1);
+        Assert.assertEquals(before, after);
     }
 
     @Test
@@ -54,8 +69,15 @@ public class GroupDeletionTests extends TestBase {
         if(! app.getGroupHelper().isThereAGroup()){
             app.getGroupHelper().createGroup(new GroupData("group1", null, null, null));
         }
+        List<GroupData> before = app.getGroupHelper().getGroupList();
         app.getGroupHelper().deleteSelectedGroupsWithBottomDeleteButton();
         //Assert.assertEquals(app.getGroupHelper().checkIfErrorMessageIsPresentOnPage(), false);    /* attempt to check if notice is present on group page or not*/
         app.getGroupHelper().returnToGroupPage();
+        List<GroupData> after = app.getGroupHelper().getGroupList();
+        before.remove(before.size() - 1);
+        Assert.assertEquals(before, after);
+
+        before.remove(before.size() - 1);
+        Assert.assertEquals(before, after);
     }
 }
