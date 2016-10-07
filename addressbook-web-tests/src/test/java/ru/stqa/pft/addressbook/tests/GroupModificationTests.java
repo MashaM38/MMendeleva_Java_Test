@@ -4,7 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -20,58 +20,122 @@ public class GroupModificationTests extends TestBase{
     }
     List<GroupData> before = app.getGroupHelper().getGroupList();
     app.getGroupHelper().selectGroup(before.size() - 1);
-    GroupData group = new GroupData(before.get(before.size() - 1).getId(), "1group1", "newHeader", "newFooter", null);
+
+    GroupData group = new GroupData(before.get(before.size() - 1).getId(), "group1", "newHeader", "newFooter", null);
     app.getGroupHelper().modifyGroup(group);
     List<GroupData> after = app.getGroupHelper().getGroupList();
     Assert.assertEquals(after.size(), before.size());
 
     before.remove(before.size() - 1);
     before.add(group);
-    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+
+    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+    before.sort(byId);
+    after.sort(byId);
+    Assert.assertEquals(before, after);
   }
 
   @Test
   public void testGroupModificationNotChangedFields(){
     app.getNavigationHelper().gotoGroupPage();
-    int before = app.getGroupHelper().getGroupCount();
     if(! app.getGroupHelper().isThereAGroup()){
       app.getGroupHelper().createGroup(new GroupData("1group1", "newHeader", "newFooter", null));
     }
-    app.getGroupHelper().selectGroup(before - 1);
-    app.getGroupHelper().modifyGroup(new GroupData("1group1", "newHeader", "newFooter", null));
+    List<GroupData> before = app.getGroupHelper().getGroupList();
+    app.getGroupHelper().selectGroup(before.size() - 1);
+    GroupData group = new GroupData(before.get(before.size() - 1).getId(), "group1", "newHeader", "newFooter", null);
+    app.getGroupHelper().modifyGroup(group);
+
+    List<GroupData> after = app.getGroupHelper().getGroupList();
+    Assert.assertEquals(after.size(), before.size());
+
+    before.remove(before.size() - 1);
+    before.add(group);
+
+    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+    before.sort(byId);
+    after.sort(byId);
+    Assert.assertEquals(before, after);
   }
 
   @Test
   public void testGroupModificationParentGroupSelected(){
     app.getNavigationHelper().gotoGroupPage();
-    int before = app.getGroupHelper().getGroupCount();
     if(! app.getGroupHelper().isThereAGroup()){
       app.getGroupHelper().createGroup(new GroupData("group1", null, null, null));
     }
-    app.getGroupHelper().selectGroup(before - 1);
-    app.getGroupHelper().modifyGroup(new GroupData("group5", "newHeader", "newFooter", "group2"));
+    List<GroupData> before = app.getGroupHelper().getGroupList();
+    app.getGroupHelper().selectGroup(before.size() - 1);
+    GroupData group = new GroupData(before.get(before.size() - 1).getId(), "group5", "newHeader", "newFooter", "group1");
+    app.getGroupHelper().modifyGroup(group);
+    List<GroupData> after = app.getGroupHelper().getGroupList();
+    Assert.assertEquals(after.size(), before.size());
+
+    if(group.getGroup() != null){
+      group.setName(group.getName() + " " + "(" + group.getGroup() + ")");
+    }
+
+    before.remove(before.size() - 1);
+    before.add(group);
+
+    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+    before.sort(byId);
+    after.sort(byId);
+    Assert.assertEquals(before, after);
   }
 
   @Test
   public void testGroupModificationForSameGroup(){
     app.getNavigationHelper().gotoGroupPage();
-    int before = app.getGroupHelper().getGroupCount();
     if(! app.getGroupHelper().isThereAGroup()){
       app.getGroupHelper().createGroup(new GroupData("group1", null, null, null));
     }
-    app.getGroupHelper().selectGroup(before - 1);
-    app.getGroupHelper().modifyGroup(new GroupData("group6", "newHeader", "newFooter", "group1"));
+    List<GroupData> before = app.getGroupHelper().getGroupList();
+    app.getGroupHelper().selectGroup(before.size() - 1);
+    GroupData group = new GroupData(before.get(before.size() - 1).getId(), "group6", "newHeader", "newFooter", "group1");
+    app.getGroupHelper().modifyGroup(group);
+
+    List<GroupData> after = app.getGroupHelper().getGroupList();
+    Assert.assertEquals(after.size(), before.size());
+
+    if(group.getGroup() != null){
+      group.setName(group.getName() + " " + "(" + group.getGroup() + ")");
+    }
+
+    before.remove(before.size() - 1);
+    before.add(group);
+
+    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+    before.sort(byId);
+    after.sort(byId);
+    Assert.assertEquals(before, after);
   }
 
   @Test
   public void testGroupModificationForSameGroupNot(){
     app.getNavigationHelper().gotoGroupPage();
-    int before = app.getGroupHelper().getGroupCount();
     if(! app.getGroupHelper().isThereAGroup()){
       app.getGroupHelper().createGroup(new GroupData("group2", null, null, null));
     }
-    app.getGroupHelper().selectGroup(before - 1);
-    app.getGroupHelper().modifyGroup(new GroupData("group7", "newHeader", "newFooter", "group2"));
+    List<GroupData> before = app.getGroupHelper().getGroupList();
+    app.getGroupHelper().selectGroup(before.size() - 1);
+    GroupData group = new GroupData(before.get(before.size() - 1).getId(), "group7", "newHeader", "newFooter", "group2");
+    app.getGroupHelper().modifyGroup(group);
+
+    List<GroupData> after = app.getGroupHelper().getGroupList();
+    Assert.assertEquals(after.size(), before.size());
+
+    if(group.getGroup() != null){
+      group.setName(group.getName() + " " + "(" + group.getGroup() + ")");
+    }
+
+    before.remove(before.size() - 1);
+    before.add(group);
+
+    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+    before.sort(byId);
+    after.sort(byId);
+    Assert.assertEquals(before, after);
   }
 
 
@@ -104,56 +168,104 @@ public class GroupModificationTests extends TestBase{
   @Test
   public void testGroupModificationEditNothing(){
      app.getNavigationHelper().gotoGroupPage();
-    int before = app.getGroupHelper().getGroupCount();
     if(! app.getGroupHelper().isThereAGroup()){
       app.getGroupHelper().createGroup(new GroupData("groupX", null, null, null));
     }
-     app.getGroupHelper().selectGroup(before - 1);
+    List<GroupData> before = app.getGroupHelper().getGroupList();
+     app.getGroupHelper().selectGroup(before.size() - 1);
      app.getGroupHelper().initGroupModification();
      app.getGroupHelper().submitGroupModification();
      app.getGroupHelper().returnToGroupPage();
+
+    List<GroupData> after = app.getGroupHelper().getGroupList();
+    Assert.assertEquals(after.size(), before.size());
+
+    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+    before.sort(byId);
+    after.sort(byId);
+    Assert.assertEquals(before, after);
   }
 
-  @Test
-  public void testGroupModificationCreateNewGroup(){
-     app.getNavigationHelper().gotoGroupPage();
-    if(! app.getGroupHelper().isThereAGroup()){
-      app.getGroupHelper().createGroup(new GroupData("groupNew", null, null, null));
-    }
-    app.getGroupHelper().modifyGroup(new GroupData("new1", "new1", "new1", null));
-  }
 
   @Test
   public void testGroupModificationSetEmptyFields(){
      app.getNavigationHelper().gotoGroupPage();
-    int before = app.getGroupHelper().getGroupCount();
     if(! app.getGroupHelper().isThereAGroup()){
       app.getGroupHelper().createGroup(new GroupData("groupEmpty", null, null, null));
     }
-    app.getGroupHelper().selectGroup(before - 1);
-    app.getGroupHelper().modifyGroup(new GroupData("", "", "", null));
+
+    List<GroupData> before = app.getGroupHelper().getGroupList();
+    app.getGroupHelper().selectGroup(before.size() - 1);
+    GroupData group = new GroupData(before.get(before.size() - 1).getId(), "", "", "", null);
+    app.getGroupHelper().modifyGroup(group);
+
+    List<GroupData> after = app.getGroupHelper().getGroupList();
+    Assert.assertEquals(after.size(), before.size());
+
+    if(group.getGroup() != null){
+      group.setName(group.getName() + " " + "(" + group.getGroup() + ")");
+    }
+
+    before.remove(before.size() - 1);
+    before.add(group);
+
+    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+    before.sort(byId);
+    after.sort(byId);
+    Assert.assertEquals(before, after);
   }
 
     @Test
     public void testGroupModificationOnlyParentGroup(){
         app.getNavigationHelper().gotoGroupPage();
-      int before = app.getGroupHelper().getGroupCount();
       if(! app.getGroupHelper().isThereAGroup()){
         app.getGroupHelper().createGroup(new GroupData("updatedGroupName", null, null, null));
       }
-      app.getGroupHelper().selectGroup(before - 1);
-      app.getGroupHelper().modifyGroup(new GroupData(null, null, null, "group2"));
+      List<GroupData> before = app.getGroupHelper().getGroupList();
+      app.getGroupHelper().selectGroup(before.size() - 1);
+      GroupData group = new GroupData(before.get(before.size() - 1).getId(), null, null, null, "group2");
+      app.getGroupHelper().modifyGroup(group);
+
+      List<GroupData> after = app.getGroupHelper().getGroupList();
+      Assert.assertEquals(after.size(), before.size());
+
+      if(group.getGroup() != null){
+        group.setName(group.getName() + " " + "(" + group.getGroup() + ")");
+      }
+
+      before.remove(before.size() - 1);
+      before.add(group);
+
+      Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+      before.sort(byId);
+      after.sort(byId);
+      Assert.assertEquals(before, after);
     }
 
     @Test
     public void testModifyOnlyGroupName(){
         app.getNavigationHelper().gotoGroupPage();
-      int before = app.getGroupHelper().getGroupCount();
       if(! app.getGroupHelper().isThereAGroup()){
         app.getGroupHelper().createGroup(new GroupData("groupToUpd", null, null, null));
       }
-      app.getGroupHelper().selectGroup(before - 1);
-      app.getGroupHelper().modifyGroup(new GroupData("updatedGroupName", null, null, null));
-    }
+      List<GroupData> before = app.getGroupHelper().getGroupList();
+      app.getGroupHelper().selectGroup(before.size() - 1);
+      GroupData group = new GroupData(before.get(before.size() - 1).getId(), "updatedGroupName", null, null, null);
+      app.getGroupHelper().modifyGroup(group);
 
+      List<GroupData> after = app.getGroupHelper().getGroupList();
+      Assert.assertEquals(after.size(), before.size());
+
+      if(group.getGroup() != null){
+        group.setName(group.getName() + " " + "(" + group.getGroup() + ")");
+      }
+
+      before.remove(before.size() - 1);
+      before.add(group);
+
+      Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+      before.sort(byId);
+      after.sort(byId);
+      Assert.assertEquals(before, after);
+    }
 }

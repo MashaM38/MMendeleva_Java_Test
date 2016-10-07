@@ -2,8 +2,8 @@ package ru.stqa.pft.addressbook.model;
 
 public class ContactData {
   private int id;
-  private final String name;
-  private final String surname;
+  private String name;
+  private String surname;
   private final String company;
   private final String address;
   private final String homePhone;
@@ -24,7 +24,7 @@ public class ContactData {
   }
 
   public ContactData(String name, String surname, String company, String address, String homePhone, String email, String notes, String group) {
-    this.id = 1;
+    this.id = Integer.MAX_VALUE;
     this.name = name;
     this.surname = surname;
     this.company = company;
@@ -67,26 +67,18 @@ public class ContactData {
     return group;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    ContactData that = (ContactData) o;
-
-    if (id != that.id) return false;
-    if (name != null ? !name.equals(that.name) : that.name != null) return false;
-    return surname != null ? surname.equals(that.surname) : that.surname == null;
-
+  public void setId(int max) {
+    this.id = max;
   }
 
-  @Override
-  public int hashCode() {
-    int result = id;
-    result = 31 * result + (name != null ? name.hashCode() : 0);
-    result = 31 * result + (surname != null ? surname.hashCode() : 0);
-    return result;
+  public void setName(String name) {
+    this.name = name;
   }
+
+  public void setSurname(String surname) {
+    this.surname = surname;
+  }
+
 
   @Override
   public String toString() {
@@ -101,8 +93,22 @@ public class ContactData {
     return id;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
 
-  public void setId(int max) {
-    this.id = max;
+    ContactData that = (ContactData) o;
+
+    if (name != null ? !name.equals(that.name) : that.name != null) return false;
+    return surname != null ? surname.equals(that.surname) : that.surname == null;
+
+  }
+
+  @Override
+  public int hashCode() {
+    int result = name != null ? name.hashCode() : 0;
+    result = 31 * result + (surname != null ? surname.hashCode() : 0);
+    return result;
   }
 }

@@ -38,9 +38,6 @@ public class GroupDeletionTests extends TestBase {
         List<GroupData> after = app.getGroupHelper().getGroupList();
         before.remove(before.size() - 1);
         Assert.assertEquals(before, after);
-
-        before.remove(before.size() - 1);
-        Assert.assertEquals(before, after);
     }
 
     @Test
@@ -51,14 +48,12 @@ public class GroupDeletionTests extends TestBase {
             app.getGroupHelper().createGroup(new GroupData("group2", null, null, null));
         }
         List<GroupData> before = app.getGroupHelper().getGroupList();
+        app.getGroupHelper().selectGroup(before.size() - 2);
         app.getGroupHelper().selectGroup(before.size() - 1);
-        app.getGroupHelper().selectOneMoreGroup();
         app.getGroupHelper().deleteSelectedGroupsWithBottomDeleteButton();
         app.getGroupHelper().returnToGroupPage();
         List<GroupData> after = app.getGroupHelper().getGroupList();
-        before.remove(before.size() - 1);
-        Assert.assertEquals(before, after);
-
+        before.remove(before.size() - 2);
         before.remove(before.size() - 1);
         Assert.assertEquals(before, after);
     }
@@ -74,10 +69,6 @@ public class GroupDeletionTests extends TestBase {
         //Assert.assertEquals(app.getGroupHelper().checkIfErrorMessageIsPresentOnPage(), false);    /* attempt to check if notice is present on group page or not*/
         app.getGroupHelper().returnToGroupPage();
         List<GroupData> after = app.getGroupHelper().getGroupList();
-        before.remove(before.size() - 1);
-        Assert.assertEquals(before, after);
-
-        before.remove(before.size() - 1);
         Assert.assertEquals(before, after);
     }
 }

@@ -45,7 +45,7 @@ public class ContactHelper extends HelperBase{
     click(By.xpath("//div[@class='msgbox']//a[.='add next']"));
   }
 
-  public void clickSelectedContact(int index){
+  public void  clickSelectedContact(int index){
     {
       wd.findElements(By.name("selected[]")).get(index).click();
     }
