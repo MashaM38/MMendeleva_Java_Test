@@ -12,11 +12,11 @@ public class GroupCreationTests extends TestBase {
 
   @Test
   public void testGroupCreation() {
-    app.getNavigationHelper().gotoGroupPage();
-    List<GroupData> before = app.getGroupHelper().getGroupList();
+    app.goTo().groupPage();
+    List<GroupData> before = app.group().list();
     GroupData group = new GroupData("group1", null, null, null);
-    app.getGroupHelper().createGroup(group);
-    List<GroupData> after = app.getGroupHelper().getGroupList();
+    app.group().create(group);
+    List<GroupData> after = app.group().list();
     Assert.assertEquals(after.size(), before.size() + 1);
 
     before.add(group);
@@ -29,14 +29,14 @@ public class GroupCreationTests extends TestBase {
 
   @Test
   public void testGroupCreationSelectNewButtonInBottom() {
-    app.getNavigationHelper().gotoGroupPage();
-    List<GroupData> before = app.getGroupHelper().getGroupList();
+    app.goTo().groupPage();
+    List<GroupData> before = app.group().list();
     GroupData group = new GroupData("group2", "group2", "group2", "group1");
-    app.getGroupHelper().initGroupCreationWithNewButtonInBottom();
-    app.getGroupHelper().fillGroupForm(group);
-    app.getGroupHelper().submitGroupCreation();
-    app.getGroupHelper().returnToGroupPage();
-    List<GroupData> after = app.getGroupHelper().getGroupList();
+    app.group().initGroupCreationWithNewButtonInBottom();
+    app.group().fillGroupForm(group);
+    app.group().submitGroupCreation();
+    app.group().returnToGroupPage();
+    List<GroupData> after = app.group().list();
     Assert.assertEquals(after.size(), before.size() + 1);
 
     if(group.getGroup() != null && !group.getGroup().isEmpty()){
@@ -52,12 +52,12 @@ public class GroupCreationTests extends TestBase {
 
   @Test
   public void testGroupCreationSelectNoneParentGroup() {
-    app.getNavigationHelper().gotoGroupPage();
-    List<GroupData> before = app.getGroupHelper().getGroupList();
+    app.goTo().groupPage();
+    List<GroupData> before = app.group().list();
     GroupData group = new GroupData("group3", "group3", "group3", null);
-    app.getGroupHelper().createGroup(group);
+    app.group().create(group);
 
-    List<GroupData> after = app.getGroupHelper().getGroupList();
+    List<GroupData> after = app.group().list();
     Assert.assertEquals(after.size(), before.size() + 1);
 
     if(group.getGroup() != null){
@@ -73,12 +73,12 @@ public class GroupCreationTests extends TestBase {
 
   @Test
   public void testGroupCreationSelectSomeParentGroup() {
-    app.getNavigationHelper().gotoGroupPage();
-    List<GroupData> before = app.getGroupHelper().getGroupList();
+    app.goTo().groupPage();
+    List<GroupData> before = app.group().list();
     GroupData group = new GroupData("group4", "group4", "group4", "group2");
-    app.getGroupHelper().createGroup(group);
+    app.group().create(group);
 
-    List<GroupData> after = app.getGroupHelper().getGroupList();
+    List<GroupData> after = app.group().list();
     Assert.assertEquals(after.size(), before.size() + 1);
 
     if(group.getGroup() != null){
@@ -94,12 +94,12 @@ public class GroupCreationTests extends TestBase {
 
   @Test
   public void testGroupCreationSelectParentGroupOnly() {
-    app.getNavigationHelper().gotoGroupPage();
-    List<GroupData> before = app.getGroupHelper().getGroupList();
+    app.goTo().groupPage();
+    List<GroupData> before = app.group().list();
     GroupData group = new GroupData(null, null, null, "group1");
-    app.getGroupHelper().createGroup(group);
+    app.group().create(group);
 
-    List<GroupData> after = app.getGroupHelper().getGroupList();
+    List<GroupData> after = app.group().list();
     Assert.assertEquals(after.size(), before.size() + 1);
 
     if(group.getGroup() != null && group.getName() == null){
@@ -115,14 +115,14 @@ public class GroupCreationTests extends TestBase {
 
   @Test
   public void testCreateGroupEmpty() {
-    app.getNavigationHelper().gotoGroupPage();
-    List<GroupData> before = app.getGroupHelper().getGroupList();
+    app.goTo().groupPage();
+    List<GroupData> before = app.group().list();
     GroupData group = new GroupData(null, null, null, null);
-    app.getGroupHelper().initGroupCreationWithNewButtonInBottom();
-    app.getGroupHelper().submitGroupCreation();
-    app.getGroupHelper().returnToGroupPage();
+    app.group().initGroupCreationWithNewButtonInBottom();
+    app.group().submitGroupCreation();
+    app.group().returnToGroupPage();
 
-    List<GroupData> after = app.getGroupHelper().getGroupList();
+    List<GroupData> after = app.group().list();
     Assert.assertEquals(after.size(), before.size() + 1);
 
     if(group.getName() == null){

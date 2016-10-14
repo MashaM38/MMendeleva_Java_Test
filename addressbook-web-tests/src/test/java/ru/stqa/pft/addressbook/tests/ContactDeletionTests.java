@@ -11,16 +11,16 @@ public class ContactDeletionTests extends TestBase {
     
     @Test
     public void testContactDeletion() {
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
         if(! app.getContactHelper().isThereContact()){
-            app.getNavigationHelper().goToCreateNewContactPage();
+            app.goTo().goToCreateNewContactPage();
             app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"));
-            app.getNavigationHelper().gotoHomePage();
+            app.goTo().gotoHomePage();
         }
         List<ContactData> before = app.getContactHelper().getContactList();
         app.getContactHelper().clickSelectedContact(before.size() - 1);
         app.getContactHelper().deleteSelectedContact();
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
         List<ContactData> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after.size(), before.size() - 1);
 
@@ -30,27 +30,27 @@ public class ContactDeletionTests extends TestBase {
 
     @Test
     public void testContactDeletionThroughEditMenu() {
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
         if(! app.getContactHelper().isThereContact()){
-            app.getNavigationHelper().goToCreateNewContactPage();
+            app.goTo().goToCreateNewContactPage();
             app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"));
-            app.getNavigationHelper().gotoHomePage();
+            app.goTo().gotoHomePage();
         }
         app.getContactHelper().initContactModification();
         app.getContactHelper().deleteSelectedContactFromEditForm();
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
     }
 
     @Test
     public void testDeleteAllContacts() {
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
         if(! app.getContactHelper().isThereContact()){
-            app.getNavigationHelper().goToCreateNewContactPage();
+            app.goTo().goToCreateNewContactPage();
             app.getContactHelper().createContact(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group3"));
-            app.getNavigationHelper().gotoHomePage();
+            app.goTo().gotoHomePage();
         }
         app.getContactHelper().selectAllRecords();
         app.getContactHelper().deleteSelectedContact();
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
     }
 }
