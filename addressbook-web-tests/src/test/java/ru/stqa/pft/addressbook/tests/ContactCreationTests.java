@@ -12,14 +12,12 @@ public class ContactCreationTests extends TestBase {
     @Test
     public void testContactCreation() {
         app.goTo().gotoHomePage();
-        List<ContactData> before = app.getContactHelper().getContactList();
-        app.goTo().goToCreateNewContactPage();
-        ContactData contact = new ContactData("user2", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group1");
-        app.getContactHelper().fillContactData(contact);
-        app.getContactHelper().selectDateOfBirthByValue("7");
-        app.getContactHelper().submitNewContact();
+        List<ContactData> before = app.contact().contactList();
+        app.goTo().createContact();
+        ContactData contact = new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group1");
+        app.contact().create(contact, "7");
         app.goTo().gotoHomePage();
-        List<ContactData> after = app.getContactHelper().getContactList();
+        List<ContactData> after = app.contact().contactList();
         Assert.assertEquals(after.size(), before.size() + 1);
 
         before.add(contact);
@@ -29,17 +27,18 @@ public class ContactCreationTests extends TestBase {
         Assert.assertEquals(before, after);
     }
 
+
     @Test
     public void testContactCreationWithEnterButtonOnTop() {
         app.goTo().gotoHomePage();
-        List<ContactData> before = app.getContactHelper().getContactList();
-        app.goTo().goToCreateNewContactPage();
-        ContactData contact = new ContactData("user2", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group2");
-        app.getContactHelper().fillContactData(contact);
-        app.getContactHelper().submitNewContactWithButtonOnTop();
+        List<ContactData> before = app.contact().contactList();
+        app.goTo().createContact();
+        ContactData contact = new ContactData("userTop", "UserSurnameTop", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group2");
+        app.contact().fillContactData(contact);
+        app.contact().submitNewContactWithButtonOnTop();
         app.goTo().gotoHomePage();
 
-        List<ContactData> after = app.getContactHelper().getContactList();
+        List<ContactData> after = app.contact().contactList();
         Assert.assertEquals(after.size(), before.size() + 1);
 
         before.add(contact);
@@ -53,13 +52,13 @@ public class ContactCreationTests extends TestBase {
     @Test
     public void testContactCreationEmpty() {
       app.goTo().gotoHomePage();
-      List<ContactData> before = app.getContactHelper().getContactList();
-      app.goTo().goToCreateNewContactPage();
+      List<ContactData> before = app.contact().contactList();
+      app.goTo().createContact();
       ContactData contact = new ContactData(before.size() + 1, new String(), new String(), "", "", "", "", "", null);
-      app.getContactHelper().submitNewContactWithButtonOnTop();
+      app.contact().submitNewContactWithButtonOnTop();
       app.goTo().gotoHomePage();
 
-      List<ContactData> after = app.getContactHelper().getContactList();
+      List<ContactData> after = app.contact().contactList();
       Assert.assertEquals(after.size(), before.size() + 1);
 
       before.add(contact);
@@ -72,23 +71,19 @@ public class ContactCreationTests extends TestBase {
     @Test
     public void testContactCreationAddNextContact() {
       app.goTo().gotoHomePage();
-      List<ContactData> before = app.getContactHelper().getContactList();
-      app.goTo().goToCreateNewContactPage();
-      ContactData contact = new ContactData("user3", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group1");
-      app.getContactHelper().fillContactData(contact);
-      app.getContactHelper().selectDateOfBirthByValue("7");
-      app.getContactHelper().submitNewContact();
+      List<ContactData> before = app.contact().contactList();
+      app.goTo().createContact();
+      ContactData contact = new ContactData("user3", "UserSurname3", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group1");
+      app.contact().create(contact, "7");
       before.add(contact);
 
-      app.getContactHelper().addNextContact();
+      app.contact().addNextContact();
       contact = new ContactData("user4", "UserSurname4", null, null, null, null, null, null);
-      app.getContactHelper().fillContactData(contact);
-      app.getContactHelper().selectDateOfBirthByValue("8");
-      app.getContactHelper().submitNewContact();
+      app.contact().create(contact, "8");
       app.goTo().gotoHomePage();
 
       before.add(contact);
-      List<ContactData> after = app.getContactHelper().getContactList();
+      List<ContactData> after = app.contact().contactList();
       Assert.assertEquals(after.size(), before.size());
 
       Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
@@ -100,15 +95,13 @@ public class ContactCreationTests extends TestBase {
     @Test
     public void testContactCreationDefaultData() {
       app.goTo().gotoHomePage();
-      List<ContactData> before = app.getContactHelper().getContactList();
-      app.goTo().goToCreateNewContactPage();
-      ContactData contact = new ContactData("userNew", "userNew", null, null, null, null, null, null);
-      app.getContactHelper().fillContactData(contact);
-      app.getContactHelper().selectDateOfBirthByValue(null);
-      app.getContactHelper().submitNewContact();
+      List<ContactData> before = app.contact().contactList();
+      app.goTo().createContact();
+      ContactData contact = new ContactData("useNameNew", "userSurnameNew", null, null, null, null, null, null);
+      app.contact().create(contact, null);
       app.goTo().gotoHomePage();
 
-      List<ContactData> after = app.getContactHelper().getContactList();
+      List<ContactData> after = app.contact().contactList();
       Assert.assertEquals(after.size(), before.size() + 1);
 
       before.add(contact);
@@ -120,10 +113,9 @@ public class ContactCreationTests extends TestBase {
 
     @Test
     public void testContactCreationAllDefaultData() {
-        app.goTo().goToCreateNewContactPage();
-        app.getContactHelper().fillContactData(new ContactData(null, null, null, null, null, null, null, null));
-        app.getContactHelper().selectDateOfBirthByValue("7");
-        app.getContactHelper().submitNewContact();
+        app.goTo().createContact();
+        ContactData contactData = new ContactData(null, null, null, null, null, null, null, null);
+        app.contact().create(contactData, "7");
         app.goTo().gotoHomePage();
     }
 }

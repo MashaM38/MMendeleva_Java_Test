@@ -22,7 +22,7 @@ public class NavigationHelper extends HelperBase{
     click(By.linkText("groups"));
   }
 
-  public void goToCreateNewContactPage() {
+  public void createContact() {
     if(isElementPresent(By.cssSelector("#header div.cf>h1>a"))
             && wd.findElement(By.cssSelector("#header div.cf>h1>a")).getText().equals("Edit / add address book entry")
             && isElementPresent(By.name("submit"))){

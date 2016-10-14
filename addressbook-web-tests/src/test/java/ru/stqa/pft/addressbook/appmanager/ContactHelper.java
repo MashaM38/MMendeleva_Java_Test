@@ -107,8 +107,14 @@ public class ContactHelper extends HelperBase{
     selectElementFromDropDownByVisibleText(By.xpath("//div[@class='right']/select[1]"), text);
   }
 
-  public void createContact(ContactData contactData) {
+  public void create(ContactData contactData) {
     fillContactData(contactData);
+    submitNewContact();
+  }
+
+  public void create(ContactData contact, String dateOfBirth) {
+    fillContactData(contact);
+    selectDateOfBirthByValue(dateOfBirth);
     submitNewContact();
   }
 
@@ -122,11 +128,21 @@ public class ContactHelper extends HelperBase{
     submitContactModification();
   }
 
+  public void modify(int index, ContactData contact, String dateOfBirth) {
+    clickSelectedContact(index);
+    initContactModification();
+    fillContactData(contact);
+    selectDateOfBirthByValue(dateOfBirth);
+    submitContactModification();
+  }
+
+
+
   public int getContactCount() {
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  public List<ContactData> getContactList() {
+  public List<ContactData> contactList() {
     List<ContactData> contacts = new ArrayList<>();
     WebElement baseTable = wd.findElement(By.id("maintable"));
     List<WebElement> rows = baseTable.findElements(By.tagName("tr"));
