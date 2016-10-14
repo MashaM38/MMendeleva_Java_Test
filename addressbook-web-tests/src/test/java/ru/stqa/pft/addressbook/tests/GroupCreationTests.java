@@ -14,7 +14,7 @@ public class GroupCreationTests extends TestBase {
   public void testGroupCreation() {
     app.goTo().groupPage();
     List<GroupData> before = app.group().list();
-    GroupData group = new GroupData("group1", null, null, null);
+    GroupData group = new GroupData().withName("group1");
     app.group().create(group);
     List<GroupData> after = app.group().list();
     Assert.assertEquals(after.size(), before.size() + 1);
@@ -31,7 +31,9 @@ public class GroupCreationTests extends TestBase {
   public void testGroupCreationSelectNewButtonInBottom() {
     app.goTo().groupPage();
     List<GroupData> before = app.group().list();
-    GroupData group = new GroupData("group2", "group2", "group2", "group1");
+    GroupData group =
+            new GroupData().withName("group2").withHeader("group2").withFooter("group2").withGroup("group1");
+            //new GroupData("group2", "group2", "group2", "group1");
     app.group().initGroupCreationWithNewButtonInBottom();
     app.group().fillGroupForm(group);
     app.group().submitGroupCreation();
@@ -40,7 +42,7 @@ public class GroupCreationTests extends TestBase {
     Assert.assertEquals(after.size(), before.size() + 1);
 
     if(group.getGroup() != null && !group.getGroup().isEmpty()){
-      group.setName(group.getName() + " " + "(" + group.getGroup() + ")");
+      group.withName(group.getName() + " " + "(" + group.getGroup() + ")");
     }
     before.add(group);
 
@@ -54,14 +56,15 @@ public class GroupCreationTests extends TestBase {
   public void testGroupCreationSelectNoneParentGroup() {
     app.goTo().groupPage();
     List<GroupData> before = app.group().list();
-    GroupData group = new GroupData("group3", "group3", "group3", null);
+    GroupData group = new GroupData().withName("group3").withHeader("group3").withFooter("group3");
+            //new GroupData("group3", "group3", "group3", null);
     app.group().create(group);
 
     List<GroupData> after = app.group().list();
     Assert.assertEquals(after.size(), before.size() + 1);
 
     if(group.getGroup() != null){
-      group.setName(group.getName() + " " + "(" + group.getGroup() + ")");
+      group.withName(group.getName() + " " + "(" + group.getGroup() + ")");
     }
     before.add(group);
 
@@ -75,14 +78,16 @@ public class GroupCreationTests extends TestBase {
   public void testGroupCreationSelectSomeParentGroup() {
     app.goTo().groupPage();
     List<GroupData> before = app.group().list();
-    GroupData group = new GroupData("group4", "group4", "group4", "group2");
+    GroupData group =
+            new GroupData().withName("group4").withHeader("group4").withFooter("group4").withGroup("group2");
+            //new GroupData("group4", "group4", "group4", "group2");
     app.group().create(group);
 
     List<GroupData> after = app.group().list();
     Assert.assertEquals(after.size(), before.size() + 1);
 
     if(group.getGroup() != null){
-      group.setName(group.getName() + " " + "(" + group.getGroup() + ")");
+      group.withName(group.getName() + " " + "(" + group.getGroup() + ")");
     }
     before.add(group);
 
@@ -96,14 +101,14 @@ public class GroupCreationTests extends TestBase {
   public void testGroupCreationSelectParentGroupOnly() {
     app.goTo().groupPage();
     List<GroupData> before = app.group().list();
-    GroupData group = new GroupData(null, null, null, "group1");
+    GroupData group = new GroupData().withGroup("group1");
     app.group().create(group);
 
     List<GroupData> after = app.group().list();
     Assert.assertEquals(after.size(), before.size() + 1);
 
     if(group.getGroup() != null && group.getName() == null){
-      group.setName( "("+ group.getGroup() +")");
+      group.withName( "("+ group.getGroup() +")");
     }
     before.add(group);
 
@@ -117,7 +122,7 @@ public class GroupCreationTests extends TestBase {
   public void testCreateGroupEmpty() {
     app.goTo().groupPage();
     List<GroupData> before = app.group().list();
-    GroupData group = new GroupData(null, null, null, null);
+    GroupData group = new GroupData();
     app.group().initGroupCreationWithNewButtonInBottom();
     app.group().submitGroupCreation();
     app.group().returnToGroupPage();
@@ -126,7 +131,7 @@ public class GroupCreationTests extends TestBase {
     Assert.assertEquals(after.size(), before.size() + 1);
 
     if(group.getName() == null){
-      group.setName("");
+      group.withName("");
     }
 
     before.add(group);
