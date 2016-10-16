@@ -191,13 +191,12 @@ public class GroupModificationTests extends TestBase{
   }
 
 
-  @Test(enabled = false)
+  @Test
   public void testGroupModificationSetEmptyFields(){
     List<GroupData> before = app.group().list();
     int index = before.size() - 1;
     GroupData group =
-            new GroupData().withId(before.get(index).getId())
-            .withName("").withHeader("").withFooter("");
+            new GroupData().withId(before.get(index).getId());
     app.group().modify(index, group);
 
     List<GroupData> after = app.group().list();
@@ -209,7 +208,7 @@ public class GroupModificationTests extends TestBase{
     if(parts.length > 1) {
       String name = parts[0];
       String groupName = parts[1];
-      group.withName(name + groupName);
+      group.withName(name + " " + groupName);
     }
     else{
       String name = parts[0];
@@ -269,7 +268,7 @@ public class GroupModificationTests extends TestBase{
 
       if(parts.length > 1) {
         String groupName = parts[1];
-        group.withName(group.getName() + " " + group.getGroup());
+        group.withName(group.getName() + " " + groupName);
       }
 
       before.remove(index);

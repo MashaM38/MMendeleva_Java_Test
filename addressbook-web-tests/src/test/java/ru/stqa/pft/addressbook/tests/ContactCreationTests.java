@@ -14,7 +14,10 @@ public class ContactCreationTests extends TestBase {
         app.goTo().gotoHomePage();
         List<ContactData> before = app.contact().contactList();
         app.goTo().createContact();
-        ContactData contact = new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group1");
+        ContactData contact =
+                new ContactData().withName("user1").withSurname("UserSurname").withCompany("COMP")
+                    .withAddress("Some address").withHomePhone("+38096-756-20-92").withEmail("someUser@mail.ru")
+                    .withNotes("feel free to share any comments").withGroup("group1");
         app.contact().create(contact, "7");
         app.goTo().gotoHomePage();
         List<ContactData> after = app.contact().contactList();
@@ -33,7 +36,10 @@ public class ContactCreationTests extends TestBase {
         app.goTo().gotoHomePage();
         List<ContactData> before = app.contact().contactList();
         app.goTo().createContact();
-        ContactData contact = new ContactData("userTop", "UserSurnameTop", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group2");
+        ContactData contact =
+                new ContactData().withName("userTop").withSurname("UserSurnameTop").withCompany("COMP")
+                    .withAddress("Some address").withHomePhone("+38096-756-20-92").withEmail("someUser@mail.ru")
+                    .withNotes("feel free to share any comments").withGroup("group1");
         app.contact().fillContactData(contact);
         app.contact().submitNewContactWithButtonOnTop();
         app.goTo().gotoHomePage();
@@ -54,7 +60,8 @@ public class ContactCreationTests extends TestBase {
       app.goTo().gotoHomePage();
       List<ContactData> before = app.contact().contactList();
       app.goTo().createContact();
-      ContactData contact = new ContactData(before.size() + 1, new String(), new String(), "", "", "", "", "", null);
+      ContactData contact =
+              new ContactData().withId(before.size() + 1);
       app.contact().submitNewContactWithButtonOnTop();
       app.goTo().gotoHomePage();
 
@@ -73,12 +80,15 @@ public class ContactCreationTests extends TestBase {
       app.goTo().gotoHomePage();
       List<ContactData> before = app.contact().contactList();
       app.goTo().createContact();
-      ContactData contact = new ContactData("user3", "UserSurname3", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group1");
+      ContactData contact =
+              new ContactData().withName("user3").withSurname("UserSurname3").withCompany("COMP")
+                  .withAddress("Some address").withHomePhone("+38096-756-20-92").withEmail("someUser@mail.ru")
+                  .withNotes("feel free to share any comments").withGroup("group1");
       app.contact().create(contact, "7");
       before.add(contact);
 
       app.contact().addNextContact();
-      contact = new ContactData("user4", "UserSurname4", null, null, null, null, null, null);
+      contact = new ContactData().withName("user4").withSurname("UserSurname4");
       app.contact().create(contact, "8");
       app.goTo().gotoHomePage();
 
@@ -97,7 +107,8 @@ public class ContactCreationTests extends TestBase {
       app.goTo().gotoHomePage();
       List<ContactData> before = app.contact().contactList();
       app.goTo().createContact();
-      ContactData contact = new ContactData("useNameNew", "userSurnameNew", null, null, null, null, null, null);
+      ContactData contact =
+              new ContactData().withName("useNameNew").withSurname("userSurnameNew");
       app.contact().create(contact, null);
       app.goTo().gotoHomePage();
 
@@ -114,7 +125,7 @@ public class ContactCreationTests extends TestBase {
     @Test
     public void testContactCreationAllDefaultData() {
         app.goTo().createContact();
-        ContactData contactData = new ContactData(null, null, null, null, null, null, null, null);
+        ContactData contactData = new ContactData();
         app.contact().create(contactData, "7");
         app.goTo().gotoHomePage();
     }

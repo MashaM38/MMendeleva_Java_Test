@@ -19,7 +19,10 @@ public class ContactModificationTests extends TestBase{
     app.goTo().gotoHomePage();
     if(app.contact().contactList().size() == 0){
       app.goTo().createContact();
-      app.contact().create(new ContactData("user1", "UserSurname", "COMP", "Some address", "+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", "group1"));
+      app.contact().create(
+              new ContactData().withName("user1").withSurname("UserSurname").withCompany("COMP")
+                      .withAddress("Some address").withHomePhone("+38096-756-20-92").withEmail("someUser@mail.ru")
+                      .withNotes("feel free to share any comments").withGroup("group3"));
       app.goTo().gotoHomePage();
     }
   }
@@ -28,7 +31,8 @@ public class ContactModificationTests extends TestBase{
   public void testModifyContactFieldsLeaveTheSameFields() {
     List<ContactData> before = app.contact().contactList();
     int index = 0;
-    ContactData contact = new ContactData(before.get(index).getId(), null, null, null, null, null, null, null, null);
+    ContactData contact =
+            new ContactData().withId(before.get(index).getId());
     app.contact().modify(index, contact, "7");
     app.goTo().gotoHomePage();
     List<ContactData> after = app.contact().contactList();
@@ -44,7 +48,10 @@ public class ContactModificationTests extends TestBase{
   public void testSelectedSingleContactModification() {
     List<ContactData> before = app.contact().contactList();
     int index = 0;
-    ContactData contact = new ContactData(before.get(index).getId(), "user3", "user3Surname", "222COMP", "222Some address", "222+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", null);
+    ContactData contact =
+            new ContactData().withId(before.get(index).getId()).withName("user3").withSurname("user3Surname")
+                .withCompany("222COMP").withAddress("222Some address").withHomePhone("222+38096-756-20-92")
+                    .withEmail("someUser@mail.ru").withNotes("feel free to share any comments");
     app.contact().modify(index, contact, "9");
     app.goTo().gotoHomePage();
 
@@ -65,7 +72,10 @@ public class ContactModificationTests extends TestBase{
     List<ContactData> before = app.contact().contactList();
     int index = 0;
     app.contact().clickSelectedContact(index);
-    ContactData contact = new ContactData(before.get(index).getId(), "user7", "user7Surname", "222COMP", "222Some address", "222+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", null);
+    ContactData contact =
+            new ContactData().withName("userUpdatedButtonTop").withSurname("userUpdatedButtonTop")
+                .withCompany("222COMP").withAddress("222Some address").withHomePhone("222+38096-756-20-92")
+                .withEmail("someUser@mail.ru").withNotes("feel free to share any comments");
     app.contact().initContactModification();
     app.contact().fillContactData(contact);
     app.contact().submitContactModificationWitUpdateButtonOnTop();
@@ -89,7 +99,10 @@ public class ContactModificationTests extends TestBase{
     app.contact().clickSelectedContact(index);
     app.contact().initContactModifyWithInfo();
     app.contact().modifyContact();
-    ContactData contact = new ContactData(before.get(index).getId(), "user8", "333User1Surname", "222COMP", "222Some address", "222+38096-756-20-92", "someUser@mail.ru", "feel free to share any comments", null);
+    ContactData contact =
+            new ContactData().withId(before.get(index).getId()).withName("user8").withSurname("333User1Surname")
+                .withCompany("222COMP").withAddress("222Some address").withHomePhone("222+38096-756-20-92")
+                .withEmail("someUser@mail.ru").withNotes("feel free to share any comments");
     app.contact().fillContactData(contact);
     app.contact().submitContactModificationWitUpdateButtonOnTop();
     app.goTo().gotoHomePage();
